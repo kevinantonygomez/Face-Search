@@ -163,4 +163,6 @@ cython_debug/
 
 data/*.dat
 data/*.pbz2
-src/test.py
+data/*.html
+test/
+.vscode/
