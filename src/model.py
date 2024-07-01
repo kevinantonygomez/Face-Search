@@ -173,9 +173,12 @@ class Model:
         for key in data.keys():
             if key == query:
                 continue
-            encoding = data[key].face_encodings
-            metrics_list = self.compute_similarity(query_encoding, encoding)
-            metrics_dict[(query,key)] = metrics_list
+            try:
+                encoding = data[key].face_encodings
+                metrics_list = self.compute_similarity(query_encoding, encoding)
+                metrics_dict[(query,key)] = metrics_list
+            except Exception as e:
+                print(e)
         return metrics_dict
 
 
