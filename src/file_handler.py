@@ -110,11 +110,11 @@ class FileHandler:
         if os.path.exists(dir_path):
             if include_sub_dirs:
                 if not dir_path.endswith('/'): dir_path = f'{dir_path}/'
-                files_gen = (p.resolve() for p in Path(dir_path).glob("**/*") if p.suffix in {".jpeg", ".jpg", ".png", ".webp"})
+                files_gen = (p.resolve() for p in Path(dir_path).glob("**/*") if p.suffix in {".jpeg", ".jpg", ".png", ".webp"} and not p.name.startswith('.'))
                 files = [f._str for f in list(files_gen)]
             else:
-                files = [f'{dir_path}/{f}' for f in os.listdir(dir_path) if f.endswith(".jpg") or f.endswith(".jpeg") or f.endswith(".png") \
-                    or f.endswith(".webp")]
+                files = [f'{dir_path}/{f}' for f in os.listdir(dir_path) if (f.endswith(".jpg") or f.endswith(".jpeg") or f.endswith(".png") \
+                    or f.endswith(".webp") and not f.startswith('.'))]
             return files
         else:
             print(f'!!! {dir_path} does not exist')
