@@ -33,12 +33,21 @@ class Model:
     '''
     Handles the extraction and encoding of faces in images
     '''
-    def __init__(self) -> None:
+    def __init__(self, detector_type:str="svm") -> None:
         '''
-        Uses HOG + Linear SVM face detector
-        TODO: CUDA and MMOD CNN face detector options
+        Inits config/settings
+        :param detector_type: "svm" or "cnn"
         '''
-        self.face_detector = dlib.get_frontal_face_detector()
+        if not self._type_check('detector_type', detector_type, str):
+            raise TypeError
+        self.detector_type = detector_type.lower()
+        if self.detector_type == 'svm':
+            self.face_detector = dlib.get_frontal_face_detector()
+        elif self.detector_type == 'cnn':
+            self.face_detector = dlib.cnn_face_detection_model_v1('data/mmod_human_face_detector.dat')
+        else:
+            print(f'detector_type must be either "svm" or "cnn". Got: {detector_type}')
+            raise ValueError
         self.shape_predictor = dlib.shape_predictor('data/shape_predictor_68_face_landmarks.dat')
         self.face_recognition_model = dlib.face_recognition_model_v1('data/dlib_face_recognition_resnet_model_v1.dat')
         self.renderer = render_html.Renderer()
@@ -72,6 +81,9 @@ class Model:
             print(f'upsample_times must be >= 0')
             raise ValueError
         faces = self.face_detector(image, upsample_times)
+        if self.detector_type == 'cnn':
+            rect_faces = [f.rect for f in faces] # convert mmod_rectangles to rectangles
+            return rect_faces 
         return faces 
 
     def get_face_data(self, file:str, upsample_times:int=0) -> FaceData:

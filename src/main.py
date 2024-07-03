@@ -7,12 +7,13 @@ class Driver:
   Drives program and is handled by user. Provides methods to batch encode multiple images 
   in a given folder at once, and to encode single image files directly
   '''
-  def __init__(self, face_data_dict:str) -> None:
+  def __init__(self, face_data_dict:str, detector_type:str='svm') -> None:
     '''
     :param face_data_dict: path to the compressed pickled dictionary 
       that stores/should store extracted face data.
+    :param detector_type: "svm" or "cnn"
     '''
-    self.model = model.Model()
+    self.model = model.Model(detector_type)
     self.file_handler = file_handler.FileHandler(face_data_dict)
   
   def extract_faces(self, img_path:str, upsample_times:int=0) -> model.FaceData:
