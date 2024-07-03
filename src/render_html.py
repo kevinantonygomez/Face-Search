@@ -110,7 +110,7 @@ class Renderer:
                 </div>
             </div>'''
 
-    def render(self, html_path="data/image_grid.html") -> None:
+    def render(self, html_path="data/results.html") -> None:
         '''
         Formats and outputs HTML file
         :param html_path: output HTML path. Creates one if doesn't exist
