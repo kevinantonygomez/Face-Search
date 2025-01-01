@@ -1,6 +1,7 @@
 # Face-Search
 ## About
-Leverage ML to find images with similar faces on your local machine.
+Leverage ML to find images with similar faces on your local machine and render the results in HTML
+![](https://github.com/kevinantonygomez/Face-Search/blob/main/assets/example.png)
 
 ## Set-up
 1. Clone this repo
